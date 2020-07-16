@@ -1,0 +1,40 @@
+.main-wrap {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.button-wrap {
+	display: flex;
+}
+
+button {
+	height: 100px;
+	width: 200px;
+	margin: 20px;
+}
+
+.card-wrap {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.new-div {
+	border: 2px solid black;
+	width: 500px;
+	height: 500px;
+	margin: 25px;
+}
+
+textarea {
+	width: 90%;
+	height: 100%;
+}
+
+ul {
+	padding: 0;
+}
+
+li {
+	list-style: none;
+}
