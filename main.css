@@ -19,7 +19,7 @@ button {
 	flex-wrap: wrap;
 }
 
-.new-div {
+.note-card {
 	border: 2px solid black;
 	width: 500px;
 	height: 500px;
@@ -28,7 +28,7 @@ button {
 
 textarea {
 	width: 90%;
-	height: 100%;
+	height: 60%;
 }
 
 ul {

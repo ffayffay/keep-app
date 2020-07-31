@@ -1,56 +1,43 @@
+const noteButton = document.getElementById('note-button'); 
+const notesWrapper = document.getElementById('card-wrap');
+let notes = [];
 
-
-
-let noteButton = document.getElementById("note-button");
-let listButton = document.getElementById('list-button');
-
-function noteTemplate() {
-	let template = `
-	<div class="new-div">
-		<textarea></textarea>
-	</div>`;
-	return template
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
 }
 
-function listTemplate() {
-	let template = `
-	<div class="new-div">
-		<ul id="ul">
-			<li>
-				<input type="checkbox">
-				<input type="text">
-			</li>
-		</ul>
-	</div>`;
-	return template
+function newNote() {
+	const note = {
+		id: uuidv4(),
+		text: "",
+		date: new Date()
+	}
+
+	notes.push(note);
+	renderNotes();
+	console.log(notes);
 }
 
-function checkboxTemplate() {
-	let template = `
-	<li>
-		<input type="checkbox">
-		<input type="text" id="input">
-	</li>
-	`
-	return template
+function deleteNote(id) {
+	notes = notes.filter(n => n.id !== id);
+	renderNotes();
+	console.log('yes')
 }
 
-function displayNote() {
-	let cardContainer = document.getElementById("card-wrap");
-	cardContainer.insertAdjacentHTML("beforeend", noteTemplate());
+function createNoteTemplate(note) {
+	return `<div class="note-card">
+				<button onclick="deleteNote('${note.id}')">X</button>
+				<button>save</button>
+				<p>${note.id}</p>
+			</div>`
 }
 
-function displayCheckbox() {
-	let cardContainer = document.getElementById("card-wrap");
-	cardContainer.insertAdjacentHTML("beforeend", listTemplate());
+function renderNotes() {
+	const notehtml = notes.map(note => createNoteTemplate(note));
+	notesWrapper.innerHTML = notehtml;
 }
 
-noteButton.addEventListener("click", displayNote);
-listButton.addEventListener("click", displayCheckbox);
-
-listButton.addEventListener('keypress', function (e) {
-	debugger
-    if (e.keycode === 13) {
-      document.getElementById('input').insertAdjacentHTML("beforeend", checkboxTemplate())
-    }
-});
+noteButton.addEventListener("click", newNote);
