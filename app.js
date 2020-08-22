@@ -1,6 +1,13 @@
 const noteButton = document.getElementById('note-button'); 
+const clearButton = document.getElementById('clear-button');
 const notesWrapper = document.getElementById('card-wrap');
-let notes = [];
+let notes = localStorage.getItem('note')
+  ? JSON.parse(localStorage.getItem('note'))
+  : []
+
+localStorage.setItem('note', JSON.stringify(notes))
+const data = JSON.parse(localStorage.getItem('note'))
+
 
 function uuidv4() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -19,6 +26,7 @@ function newNote() {
 	}
 
 	notes.push(note);
+	localStorage.setItem('note', JSON.stringify(notes))
 	renderNotes();
 	console.log(notes);
 }
@@ -26,6 +34,7 @@ function newNote() {
 // DELETE
 function deleteNote(id) {
 	notes = notes.filter(n => n.id !== id);
+	localStorage.setItem('note', JSON.stringify(notes))
 	renderNotes();
 	console.log('yes')
 }
@@ -49,6 +58,7 @@ function saveNote(id) {
 	};
 
 	notes = notes.map(n => n.id === id ? newNote : n)
+	localStorage.setItem('note', JSON.stringify(notes))
 	renderNotes();
 	console.log(newNote);
 }
@@ -70,6 +80,18 @@ function renderNotes() {
 	notesWrapper.innerHTML = notehtml;
 }
 
+function onStartup() {
+	renderNotes()
+}
+
+
+onStartup()
+
 noteButton.addEventListener("click", newNote);
 
-// Need edit and update functions
+clearButton.addEventListener('click', function () {
+  localStorage.clear()
+  notes = [];
+  renderNotes();
+})
+
